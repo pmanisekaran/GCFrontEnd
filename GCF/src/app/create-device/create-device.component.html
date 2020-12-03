@@ -1,1 +1,62 @@
-<p>create-device works!</p>
+<h1>Begin Your Search!</h1>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<div class="container">
+    <div [hidden]="submitted">
+        <form (ngSubmit)="onSubmit()" #deviceDetailForm="ngForm">
+            <div class="form-group">
+                <label for="deviceModelId">Model Id</label>
+                <input type="text" maxlength="5" minlength="3" class="form-control" id="deviceModelId" required
+                    [(ngModel)]="deviceDetail.deviceModelId" name="deviceModelId" #deviceModelId="ngModel"
+                    pattern="[a-zA-Z0-9]*">
+                <div [hidden]="deviceModelId.valid || deviceModelId.pristine" class="alert alert-danger">
+                    Device model id is required, must be alphanumeric only and must be 3-5 characters long
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="brand">Brand</label>
+                <input type="text" maxlength="10" minlength="3" class="form-control" id="brand" required
+                    [(ngModel)]="deviceDetail.brand" name="brand" #deviceModelId="ngModel"
+                    pattern="[a-zA-Z0-9]*">
+                <div [hidden]="deviceModelId.valid || deviceModelId.pristine" class="alert alert-danger">
+                    Brand is required, must be alphanumeric only and must be 3-10 characters long
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="computerType">ComputerType</label>
+                <select class="form-control" id="computerType" required [(ngModel)]="deviceDetail.computerType"
+                    name="computerType" #computerType="ngModel">
+                    <option *ngFor="let ct of computerTypes" [value]="ct">{{ct}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="processor">processor</label>
+                <input type="text" maxlength="10" minlength="3" class="form-control" id="processor" required
+                    [(ngModel)]="deviceDetail.processor" name="processor" #processor="ngModel"
+                    pattern="[a-zA-Z0-9]*">
+                <div [hidden]="processor.valid || processor.pristine" class="alert alert-danger">
+                    Processor is required, must be alphanumeric only and must be 3-10 characters long
+                </div>
+            </div>
+
+            
+            <div class="form-group">
+                <label for="price">price</label>
+                <input type="number" maxlength="10" minlength="1" min=1 class="form-control" id="price" required
+                    [(ngModel)]="deviceDetail.price" name="price" #price="ngModel"
+                    pattern="[0-9]*">
+                <div [hidden]="price.valid || price.pristine" class="alert alert-danger">
+                    Price is required, must be positive non zero  numeric only 
+                </div>
+            </div>
+            <a routerLink="/"> 
+                <button type="submit"  (click)="onSubmit();"  class="btn btn-success"
+                    [disabled]="(!deviceDetailForm.form.valid) ">Submit</button>
+             </a>
+            <button type="button" class="btn btn-primary" (click)="clear();">Clear</button>
+        </form>
+    </div>
+
+</div>

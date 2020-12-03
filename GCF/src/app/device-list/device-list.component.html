@@ -1,1 +1,129 @@
-<p>device-list works!</p>
+<h1>Computer Devices</h1>
+
+<div class="container">
+    <table>
+        <tbody>
+            <tr>
+                <td> <button class="btn btn-primary" (click)="changeDisplay()">
+                        {{displayLabel}}
+                    </button></td>
+                <td>
+                    <pagination-controls class="btn btn-defaulr" (pageChange)="page= $event" directionLinks="true">
+                    </pagination-controls>
+                </td>
+
+                <td>
+            </tr>
+        </tbody>
+
+    </table>
+</div>
+
+<div class="container">
+    <table class="table table-striped">
+        <th> <label for="FromPrice">Price from</label></th>
+        <th><label for="ToPrice">Max Price</label></th>
+        <th><label for="orderBy">Order By</label></th>
+        <th></th>
+        <th></th>
+        <tbody>
+            <tr>
+                <td>
+
+                    <input type="number" onkeypress="return event.charCode >= 48" min="1" class="form-control"
+                        id="FromPrice" required [(ngModel)]="fromPrice" name="FromPrice" #ToPrice="ngModel">
+                </td>
+                <td>
+
+                    <input type="number" onkeypress="return event.charCode >= 48" min="1" class="form-control"
+                        id="toPrice" required [(ngModel)]="toPrice" name="ToPrice" #ToPrice="ngModel">
+                </td>
+                <td>
+                    <select class="form-control" id="orderBy" required [(ngModel)]="orderBy" name="orderBy"
+                        #orderByElement="ngModel">
+                        <option *ngFor="let f of fields" [value]="f">{{f}}</option>
+                    </select>
+                </td>
+
+                <td> <button class="btn btn-primary" (click)="ApplyFilterSort()">
+                        Apply
+                    </button></td>
+                <td> <button class="btn btn-primary" (click)="clearFilter()">
+                        Clear
+                    </button></td>
+            </tr>
+        </tbody>
+
+    </table>
+</div>
+<div class="container">
+
+
+</div>
+<br>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<div *ngIf="deviceDetailList && isCard">
+    <ul *ngIf="deviceDetailList">
+        <li *ngFor="let deviceDetail of deviceDetailList | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
+            <p class="name">{{ deviceDetail.brand }}</p>
+            <p class="country">Type:{{ deviceDetail.computerType }} hours</p>
+            <p class="country">Id:{{ deviceDetail.deviceModelId }} </p>
+            <p class="country">Prossesor:{{ deviceDetail.processor }}</p>
+            <p class="country">USB:{{ deviceDetail.usbPorts }} RAM:{{ deviceDetail.ramSlots}}</p>
+            <p class="country">Form Factor:{{deviceDetail.formFactor}}</p>
+            <p class="country">Qty:{{ deviceDetail.quantity }} Screen:{{deviceDetail.screenSize}} inch</p>
+            <p class="country"><strong>{{ deviceDetail.price |currency:'AUD' }}</strong></p>
+
+
+        </li>
+    </ul>
+
+</div>
+<div *ngIf="deviceDetailList && !isCard">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Model Id</th>
+                <th>Brand</th>
+                <th>Computer Type</th>
+                <th>Processor</th>
+                <th>USB Ports</th>
+                <th>RAM Slots</th>
+                <th>Form Factor</th>
+                <th>Quantity</th>
+                <th>Screen Size</th>
+                <th>Price</th>
+                <th>
+                <th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr
+                *ngFor="let deviceDetail of deviceDetailList | paginate: { itemsPerPage: itemsPerPage, currentPage: page , totalItems:totalRecords}">
+                <td>{{deviceDetail.deviceModelId}}</td>
+                <td>{{deviceDetail.brand}}</td>
+                <td>{{deviceDetail.computerType}}</td>
+                <td>{{deviceDetail.processor}}</td>
+                <td>{{deviceDetail.usbPorts}}</td>
+                <td>{{deviceDetail.ramSlots}}</td>
+                <td>{{deviceDetail.formFactor}}</td>
+                <td>{{deviceDetail.quantity}}</td>
+                <td>{{deviceDetail.screenSize}}</td>
+                <td>{{deviceDetail.price |currency:'AUD'}}</td>
+                <td><button class="btn btn-danger" (click)="deleteDevice(deviceDetail.DeviceModelId)">
+                        Delete
+                    </button>
+                </td>
+
+                <td><button class="btn btn-warning" (click)="editDevice(deviceDetail.DeviceModelId)">
+                        Edit
+                    </button>
+                </td>
+
+            </tr>
+        </tbody>
+
+    </table>
+</div>

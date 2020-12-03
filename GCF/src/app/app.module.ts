@@ -9,6 +9,7 @@ import { CreateDeviceComponent } from './create-device/create-device.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import {NgxPaginationModule} from 'ngx-pagination'; 
+import { DeviceDetail } from './ServicesAndClasses/Classes/DeviceDetail';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
     FormsModule,
     HttpClientModule 
   ],
-  providers: [],
+  providers: [DeviceDetail],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
